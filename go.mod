@@ -1,4 +1,4 @@
-module mexc-sdk/mexcsdk
+module github.com/farbodghasemlu/mexc-sdk-go
 
 go 1.16
 
