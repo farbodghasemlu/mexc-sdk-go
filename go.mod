@@ -1,5 +1,7 @@
 module github.com/farbodghasemlu/mexc-sdk-go
 
-go 1.16
+go 1.24.5
 
-require github.com/aws/jsii-runtime-go v1.44.1
+require github.com/go-resty/resty/v2 v2.16.5
+
+require golang.org/x/net v0.33.0 // indirect
