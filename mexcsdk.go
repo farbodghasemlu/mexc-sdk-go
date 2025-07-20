@@ -13,7 +13,7 @@ import (
 type Spot interface {
 	Ping() error
 	Time() (*ServerTime, error)
-	ExchangeInfo(params map[string]string) ([]ExchangeInfo, error)
+	ExchangeInfo(params map[string]string) (*ExchangeInfo, error)
 	Depth(params map[string]string) (*OrderBook, error)
 	Trades(params map[string]string) ([]RecentTrade, error)
 	AggTrades(params map[string]string) ([]AggregateTrade, error)
@@ -123,17 +123,17 @@ func (c *spotClient) Time() (*ServerTime, error) {
 	return &serverTime, nil
 }
 
-func (c *spotClient) ExchangeInfo(params map[string]string) ([]ExchangeInfo, error) {
+func (c *spotClient) ExchangeInfo(params map[string]string) (*ExchangeInfo, error) {
 	response, err := c.reqService.PublicGet("/exchangeInfo", c.paramsToJSON(params))
 	if err != nil {
 		c.logger.Printf("Failed to get exchange info: %v", err)
 		return nil, err
 	}
-	var info []ExchangeInfo
+	var info ExchangeInfo
 	if err := c.handleResponse(response, &info); err != nil {
 		return nil, err
 	}
-	return info, nil
+	return &info, nil
 }
 
 func (c *spotClient) Depth(params map[string]string) (*OrderBook, error) {

@@ -77,6 +77,14 @@ type OrderBook struct {
 
 // ExchangeInfo represents exchange information
 type ExchangeInfo struct {
+	Timezone        string        `json:"timezone"`
+	ServerTime      int64         `json:"serverTime"`
+	RateLimits      []interface{} `json:"rateLimits"`
+	ExchangeFilters []interface{} `json:"exchangeFilters"`
+	Symbols         []Symbol      `json:"symbols"`
+}
+
+type Symbol struct {
 	Symbol                     string        `json:"symbol"`
 	Status                     string        `json:"status"`
 	BaseAsset                  string        `json:"baseAsset"`
@@ -87,7 +95,6 @@ type ExchangeInfo struct {
 	BaseCommissionPrecision    int           `json:"baseCommissionPrecision"`
 	QuoteCommissionPrecision   int           `json:"quoteCommissionPrecision"`
 	OrderTypes                 []string      `json:"orderTypes"`
-	QuoteOrderQtyMarketAllowed bool          `json:"quoteOrderQtyMarketAllowed"`
 	IsSpotTradingAllowed       bool          `json:"isSpotTradingAllowed"`
 	IsMarginTradingAllowed     bool          `json:"isMarginTradingAllowed"`
 	QuoteAmountPrecision       string        `json:"quoteAmountPrecision"`
@@ -97,7 +104,11 @@ type ExchangeInfo struct {
 	MaxQuoteAmount             string        `json:"maxQuoteAmount"`
 	MakerCommission            string        `json:"makerCommission"`
 	TakerCommission            string        `json:"takerCommission"`
-	TradeSideType              string        `json:"tradeSideType"`
+	QuoteAmountPrecisionMarket string        `json:"quoteAmountPrecisionMarket"`
+	MaxQuoteAmountMarket       string        `json:"maxQuoteAmountMarket"`
+	FullName                   string        `json:"fullName"`
+	TradeSideType              int           `json:"tradeSideType"`
+	St                         bool          `json:"st"`
 }
 
 // ServerTime represents server time response
