@@ -91,7 +91,7 @@ func (c *spotClient) handleResponse(response interface{}, target interface{}) er
 
 	// Check for HTTP errors
 	if resp.IsError() {
-		return fmt.Errorf("API error: %s", resp.Status())
+		return fmt.Errorf("API error: %s", resp)
 	}
 
 	// Unmarshal the JSON body
@@ -457,7 +457,7 @@ func (c *spotClient) QueryCurrencyInfo(params map[string]string) ([]CurrencyInfo
 }
 
 func (c *spotClient) Withdraw(params map[string]string) (*WithdrawResponse, error) {
-	response, err := c.reqService.PrivatePost("/capital/withdraw/apply", c.paramsToJSON(params))
+	response, err := c.reqService.PrivatePost("/capital/withdraw", c.paramsToJSON(params))
 	if err != nil {
 		c.logger.Printf("Failed to withdraw: %v", err)
 		return nil, err

@@ -6,6 +6,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+
 	// "net/url"
 	"strings"
 	"time"
@@ -32,17 +33,17 @@ func NewRequestService(apiKey, apiSecret, baseURL string) *RequestService {
 // PublicGet makes a public GET request
 func (s *RequestService) PublicGet(endpoint string, params string) (interface{}, error) {
 	urlStr := s.baseURL + endpoint
-	
+
 	if params != "" {
 		strParams := s.jsonToParamStr(params)
 		urlStr += "?" + strParams
 	}
-	
+
 	resp, err := s.client.R().Get(urlStr)
 	if err != nil {
 		return nil, fmt.Errorf("public GET request failed: %w", err)
 	}
-	
+
 	return resp, nil
 }
 
@@ -50,7 +51,7 @@ func (s *RequestService) PublicGet(endpoint string, params string) (interface{},
 func (s *RequestService) PrivateGet(endpoint string, params string) (interface{}, error) {
 	urlStr := s.baseURL + endpoint
 	timestamp := time.Now().UnixNano() / 1e6
-	
+
 	var message string
 	if params == "" {
 		message = fmt.Sprintf("timestamp=%d", timestamp)
@@ -58,21 +59,21 @@ func (s *RequestService) PrivateGet(endpoint string, params string) (interface{}
 		strParams := s.jsonToParamStr(params)
 		message = fmt.Sprintf("%s&timestamp=%d", strParams, timestamp)
 	}
-	
+
 	sign := s.computeHmac256(message)
 	fullURL := fmt.Sprintf("%s?%s&timestamp=%d&signature=%s", urlStr, message, timestamp, sign)
-	
+
 	resp, err := s.client.R().
 		SetHeaders(map[string]string{
 			"X-MEXC-APIKEY": s.apiKey,
 			"Content-Type":  "application/json",
 		}).
 		Get(fullURL)
-	
+
 	if err != nil {
 		return nil, fmt.Errorf("private GET request failed: %w", err)
 	}
-	
+
 	return resp, nil
 }
 
@@ -80,7 +81,7 @@ func (s *RequestService) PrivateGet(endpoint string, params string) (interface{}
 func (s *RequestService) PrivatePost(endpoint string, params string) (interface{}, error) {
 	urlStr := s.baseURL + endpoint
 	timestamp := time.Now().UnixNano() / 1e6
-	
+
 	var message string
 	if params == "" {
 		message = fmt.Sprintf("timestamp=%d", timestamp)
@@ -88,29 +89,31 @@ func (s *RequestService) PrivatePost(endpoint string, params string) (interface{
 		strParams := s.jsonToParamStr(params)
 		message = fmt.Sprintf("%s&timestamp=%d", strParams, timestamp)
 	}
-	
+
 	sign := s.computeHmac256(message)
 	fullURL := fmt.Sprintf("%s?timestamp=%d&signature=%s", urlStr, timestamp, sign)
-	
-	var body interface{}
-	if params != "" {
-		if err := json.Unmarshal([]byte(params), &body); err != nil {
-			return nil, fmt.Errorf("failed to unmarshal params: %w", err)
-		}
-	}
-	
+	body := fmt.Sprintf("%s&signature=%s", message, sign)
+	fmt.Println(fullURL)
+	fmt.Println(body)
+	// var body interface{}
+	// if params != "" {
+	// 	if err := json.Unmarshal([]byte(params), &body); err != nil {
+	// 		return nil, fmt.Errorf("failed to unmarshal params: %w", err)
+	// 	}
+	// }
+
 	resp, err := s.client.R().
 		SetHeaders(map[string]string{
 			"X-MEXC-APIKEY": s.apiKey,
 			"Content-Type":  "application/json",
 		}).
 		SetBody(body).
-		Post(fullURL)
-	
+		Post(urlStr)
+
 	if err != nil {
 		return nil, fmt.Errorf("private POST request failed: %w", err)
 	}
-	
+
 	return resp, nil
 }
 
@@ -118,7 +121,7 @@ func (s *RequestService) PrivatePost(endpoint string, params string) (interface{
 func (s *RequestService) PrivateDelete(endpoint string, params string) (interface{}, error) {
 	urlStr := s.baseURL + endpoint
 	timestamp := time.Now().UnixNano() / 1e6
-	
+
 	var message string
 	if params == "" {
 		message = fmt.Sprintf("timestamp=%d", timestamp)
@@ -126,21 +129,21 @@ func (s *RequestService) PrivateDelete(endpoint string, params string) (interfac
 		strParams := s.jsonToParamStr(params)
 		message = fmt.Sprintf("%s&timestamp=%d", strParams, timestamp)
 	}
-	
+
 	sign := s.computeHmac256(message)
 	fullURL := fmt.Sprintf("%s?%s&timestamp=%d&signature=%s", urlStr, message, timestamp, sign)
-	
+
 	resp, err := s.client.R().
 		SetHeaders(map[string]string{
 			"X-MEXC-APIKEY": s.apiKey,
 			"Content-Type":  "application/json",
 		}).
 		Delete(fullURL)
-	
+
 	if err != nil {
 		return nil, fmt.Errorf("private DELETE request failed: %w", err)
 	}
-	
+
 	return resp, nil
 }
 
@@ -148,7 +151,7 @@ func (s *RequestService) PrivateDelete(endpoint string, params string) (interfac
 func (s *RequestService) PrivatePut(endpoint string, params string) (interface{}, error) {
 	urlStr := s.baseURL + endpoint
 	timestamp := time.Now().UnixNano() / 1e6
-	
+
 	var message string
 	if params == "" {
 		message = fmt.Sprintf("timestamp=%d", timestamp)
@@ -156,17 +159,17 @@ func (s *RequestService) PrivatePut(endpoint string, params string) (interface{}
 		strParams := s.jsonToParamStr(params)
 		message = fmt.Sprintf("%s&timestamp=%d", strParams, timestamp)
 	}
-	
+
 	sign := s.computeHmac256(message)
 	fullURL := fmt.Sprintf("%s?timestamp=%d&signature=%s", urlStr, timestamp, sign)
-	
+
 	var body interface{}
 	if params != "" {
 		if err := json.Unmarshal([]byte(params), &body); err != nil {
 			return nil, fmt.Errorf("failed to unmarshal params: %w", err)
 		}
 	}
-	
+
 	resp, err := s.client.R().
 		SetHeaders(map[string]string{
 			"X-MEXC-APIKEY": s.apiKey,
@@ -174,11 +177,11 @@ func (s *RequestService) PrivatePut(endpoint string, params string) (interface{}
 		}).
 		SetBody(body).
 		Put(fullURL)
-	
+
 	if err != nil {
 		return nil, fmt.Errorf("private PUT request failed: %w", err)
 	}
-	
+
 	return resp, nil
 }
 
@@ -186,15 +189,15 @@ func (s *RequestService) PrivatePut(endpoint string, params string) (interface{}
 func (s *RequestService) jsonToParamStr(jsonParams string) string {
 	var paramsArr []string
 	m := make(map[string]string)
-	
+
 	if err := json.Unmarshal([]byte(jsonParams), &m); err != nil {
 		return ""
 	}
-	
+
 	for key, value := range m {
 		paramsArr = append(paramsArr, fmt.Sprintf("%s=%s", key, value))
 	}
-	
+
 	return strings.Join(paramsArr, "&")
 }
 
