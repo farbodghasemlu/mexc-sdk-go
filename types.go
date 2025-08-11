@@ -47,9 +47,9 @@ type KlineData []interface{}
 
 // AggregateTrade represents compressed/aggregate trades
 type AggregateTrade struct {
-	A  interface{} `json:"a"` // Aggregate trade ID
-	F  interface{} `json:"f"` // First trade ID
-	L  interface{} `json:"l"` // Last trade ID
+	A  interface{} `json:"a"` // Aggregate trade Id
+	F  interface{} `json:"f"` // First trade Id
+	L  interface{} `json:"l"` // Last trade Id
 	P  string      `json:"p"` // Price
 	Q  string      `json:"q"` // Quantity
 	T  int64       `json:"T"` // Timestamp
@@ -59,7 +59,7 @@ type AggregateTrade struct {
 
 // RecentTrade represents recent trades
 type RecentTrade struct {
-	ID           interface{} `json:"id"`
+	Id           interface{} `json:"id"`
 	Price        string      `json:"price"`
 	Qty          string      `json:"qty"`
 	QuoteQty     string      `json:"quoteQty"`
@@ -70,7 +70,7 @@ type RecentTrade struct {
 
 // OrderBook represents order book data
 type OrderBook struct {
-	LastUpdateID int64      `json:"lastUpdateId"`
+	LastUpdateId int64      `json:"lastUpdateId"`
 	Bids         [][]string `json:"bids"`
 	Asks         [][]string `json:"asks"`
 }
@@ -123,10 +123,10 @@ type SubAccountAsset struct {
 
 // MasterUniversalTransferHistory represents universal transfer history for master account
 type MasterUniversalTransferHistory struct {
-	TranID          string `json:"tranId"`
+	TranId          string `json:"tranId"`
 	FromAccount     string `json:"fromAccount"`
 	ToAccount       string `json:"toAccount"`
-	ClientTranID    string `json:"clientTranId"`
+	ClientTranId    string `json:"clientTranId"`
 	Asset           string `json:"asset"`
 	Amount          string `json:"amount"`
 	FromAccountType string `json:"fromAccountType"`
@@ -139,7 +139,7 @@ type MasterUniversalTransferHistory struct {
 
 // MasterUniversalTransferResponse represents universal transfer response for master account
 type MasterUniversalTransferResponse struct {
-	TranID int64 `json:"tranId"`
+	TranId int64 `json:"tranId"`
 }
 
 // DeleteSubAccountAPIKeyResponse represents response for deleting sub-account API key
@@ -181,7 +181,7 @@ type SubAccountInfo struct {
 	SubAccount string `json:"subAccount"`
 	IsFreeze   bool   `json:"isFreeze"`
 	CreateTime int64  `json:"createTime"`
-	UID        string `json:"uid"`
+	Uid        string `json:"uid"`
 }
 
 // CreateSubAccountResponse represents response for creating sub-account
@@ -193,9 +193,9 @@ type CreateSubAccountResponse struct {
 // Trade represents account trade information
 type Trade struct {
 	Symbol          string `json:"symbol"`
-	ID              string `json:"id"`
-	OrderID         string `json:"orderId"`
-	OrderListID     int64  `json:"orderListId"`
+	Id              string `json:"id"`
+	OrderId         string `json:"orderId"`
+	OrderListId     int64  `json:"orderListId"`
 	Price           string `json:"price"`
 	Qty             string `json:"qty"`
 	QuoteQty        string `json:"quoteQty"`
@@ -206,7 +206,7 @@ type Trade struct {
 	IsMaker         bool   `json:"isMaker"`
 	IsBestMatch     bool   `json:"isBestMatch"`
 	IsSelfTrade     bool   `json:"isSelfTrade"`
-	ClientOrderID   string `json:"clientOrderId"`
+	ClientOrderId   string `json:"clientOrderId"`
 }
 
 // AccountInfo represents account information
@@ -229,9 +229,9 @@ type Balance struct {
 // Order represents order information
 type Order struct {
 	Symbol              string `json:"symbol"`
-	OrderID             int64  `json:"orderId"`
-	OrderListID         int64  `json:"orderListId"`
-	ClientOrderID       string `json:"clientOrderId"`
+	OrderId             int64  `json:"orderId"`
+	OrderListId         int64  `json:"orderListId"`
+	ClientOrderId       string `json:"clientOrderId"`
 	Price               string `json:"price"`
 	OrigQty             string `json:"origQty"`
 	ExecutedQty         string `json:"executedQty"`
@@ -251,9 +251,9 @@ type Order struct {
 // CancelOrderResponse represents cancel order response
 type CancelOrderResponse struct {
 	Symbol              string `json:"symbol"`
-	OrigClientOrderID   string `json:"origClientOrderId"`
-	OrderID             int64  `json:"orderId"`
-	ClientOrderID       string `json:"clientOrderId"`
+	OrigClientOrderId   string `json:"origClientOrderId"`
+	OrderId             int64  `json:"orderId"`
+	ClientOrderId       string `json:"clientOrderId"`
 	Price               string `json:"price"`
 	OrigQty             string `json:"origQty"`
 	ExecutedQty         string `json:"executedQty"`
@@ -272,15 +272,15 @@ type BatchOrderResponse struct {
 
 type BatchOrderSuccess struct {
 	Symbol      string `json:"symbol"`
-	OrderID     string `json:"orderId"`
-	OrderListID int64  `json:"orderListId"`
+	OrderId     string `json:"orderId"`
+	OrderListId int64  `json:"orderListId"`
 }
 
 type BatchOrderError struct {
 	Symbol           string `json:"symbol,omitempty"`
-	OrderID          string `json:"orderId,omitempty"`
-	NewClientOrderID string `json:"newClientOrderId,omitempty"`
-	OrderListID      int64  `json:"orderListId,omitempty"`
+	OrderId          string `json:"orderId,omitempty"`
+	NewClientOrderId string `json:"newClientOrderId,omitempty"`
+	OrderListId      int64  `json:"orderListId,omitempty"`
 	Msg              string `json:"msg"`
 	Code             int    `json:"code"`
 }
@@ -288,8 +288,8 @@ type BatchOrderError struct {
 // NewOrderResponse represents new order response
 type NewOrderResponse struct {
 	Symbol       string `json:"symbol"`
-	OrderID      string `json:"orderId"`
-	OrderListID  int64  `json:"orderListId"`
+	OrderId      string `json:"orderId"`
+	OrderListId  int64  `json:"orderListId"`
 	Price        string `json:"price"`
 	OrigQty      string `json:"origQty"`
 	Type         string `json:"type"`
@@ -311,7 +311,7 @@ type KYCStatus struct {
 
 // WithdrawResponse represents response for withdraw requests
 type WithdrawResponse struct {
-	ID string `json:"id"`
+	Id string `json:"id"`
 }
 
 // InternalTransferHistory represents internal transfer history data
@@ -323,7 +323,7 @@ type InternalTransferHistory struct {
 }
 
 type InternalTransferRecord struct {
-	TranID        string `json:"tranId"`
+	TranId        string `json:"tranId"`
 	Asset         string `json:"asset"`
 	Amount        string `json:"amount"`
 	ToAccountType string `json:"toAccountType"`
@@ -335,7 +335,7 @@ type InternalTransferRecord struct {
 
 // InternalTransferResponse represents response for internal transfer
 type InternalTransferResponse struct {
-	TranID string `json:"tranId"`
+	TranId string `json:"tranId"`
 }
 
 // DustLog represents dust conversion log
@@ -354,7 +354,7 @@ type DustLogItem struct {
 }
 
 type ConvertDetail struct {
-	ID      string `json:"id"`
+	Id      string `json:"id"`
 	Convert string `json:"convert"`
 	Fee     string `json:"fee"`
 	Amount  string `json:"amount"`
@@ -382,8 +382,8 @@ type ConvertibleAsset struct {
 
 // UniversalTransferHistory represents universal transfer history
 type UniversalTransferHistory struct {
-	TranID          string `json:"tranId"`
-	ClientTranID    string `json:"clientTranId"`
+	TranId          string `json:"tranId"`
+	ClientTranId    string `json:"clientTranId"`
 	Asset           string `json:"asset"`
 	Amount          string `json:"amount"`
 	FromAccountType string `json:"fromAccountType"`
@@ -401,7 +401,7 @@ type UniversalTransferHistoryList struct {
 
 // UniversalTransferResponse represents response for universal transfer
 type UniversalTransferResponse struct {
-	TranID string `json:"tranId"`
+	TranId string `json:"tranId"`
 }
 
 // WithdrawAddress represents withdraw address information
@@ -439,8 +439,8 @@ type GeneratedDepositAddress struct {
 
 // WithdrawHistory represents withdraw history
 type WithdrawHistory struct {
-	ID             string `json:"id"`
-	TxID           string `json:"txId"`
+	Id             string `json:"id"`
+	TxId           string `json:"txId"`
 	Coin           string `json:"coin"`
 	Network        string `json:"network"`
 	Address        string `json:"address"`
@@ -454,8 +454,8 @@ type WithdrawHistory struct {
 	Memo           string `json:"memo"`
 	TransHash      string `json:"transHash"`
 	UpdateTime     int64  `json:"updateTime"`
-	CoinID         string `json:"coinId"`
-	VcoinID        string `json:"vcoinId"`
+	CoinId         string `json:"coinId"`
+	VcoinId        string `json:"vcoinId"`
 }
 
 // DepositHistory represents deposit history
@@ -465,7 +465,7 @@ type DepositHistory struct {
 	Network       string `json:"network"`
 	Status        int    `json:"status"`
 	Address       string `json:"address"`
-	TxID          string `json:"txId"`
+	TxId          string `json:"txId"`
 	InsertTime    int64  `json:"insertTime"`
 	UnlockConfirm string `json:"unlockConfirm"`
 	ConfirmTimes  string `json:"confirmTimes"`
@@ -474,7 +474,7 @@ type DepositHistory struct {
 
 // CancelWithdrawResponse represents response for cancel withdraw
 type CancelWithdrawResponse struct {
-	ID string `json:"id"`
+	Id string `json:"id"`
 }
 
 // CurrencyInfo represents currency information
